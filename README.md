@@ -1,2 +1,3 @@
-# openehr-java-api-generator
+# Java API Generator
+
 Generates Java API packages from openEHR specifications
