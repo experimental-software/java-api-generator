@@ -1,4 +1,4 @@
-package com.experimental_software.elements;
+package com.experimental_software.element;
 
 import lombok.Builder;
 import lombok.Getter;
