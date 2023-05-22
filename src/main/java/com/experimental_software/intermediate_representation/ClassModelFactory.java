@@ -15,6 +15,7 @@ import com.experimental_software.element.Type;
 import com.jayway.jsonpath.DocumentContext;
 import com.jayway.jsonpath.JsonPath;
 
+@SuppressWarnings("unchecked")
 public class ClassModelFactory {
 
     private final DocumentContext json;
@@ -89,15 +90,11 @@ public class ClassModelFactory {
             return Multiplicity.ONE;
         }
 
-        switch (multiplicityRaw) {
-            case "0..1":
-                return Multiplicity.ZERO_OR_ONE;
-            case "1..1":
-                return Multiplicity.ONE;
-            case "0..*":
-                return Multiplicity.MANY;
-            default:
-                throw new IllegalArgumentException("Unknown multiplicity: " + multiplicityRaw);
-        }
+        return switch (multiplicityRaw) {
+            case "0..1" -> Multiplicity.ZERO_OR_ONE;
+            case "1..1" -> Multiplicity.ONE;
+            case "0..*" -> Multiplicity.MANY;
+            default -> throw new IllegalArgumentException("Unknown multiplicity: " + multiplicityRaw);
+        };
     }
 }
