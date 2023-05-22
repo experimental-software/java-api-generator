@@ -1,6 +1,6 @@
 package com.experimental_software.element;
 
-import static com.experimental_software.util.StringExtension.toPascalCase;
+import static com.experimental_software.util.StringUtils.toPascalCase;
 
 import java.util.ArrayList;
 import java.util.List;
