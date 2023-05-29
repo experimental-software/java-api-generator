@@ -1,6 +1,6 @@
-package com.experimental_software.element;
+package com.experimental_software.api_generator.element;
 
-import static com.experimental_software.util.StringUtils.toPascalCase;
+import com.experimental_software.api_generator.util.StringUtils;
 
 import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
@@ -14,6 +14,6 @@ public class Type {
     private final String name;
 
     public String getName() {
-        return toPascalCase(name);
+        return StringUtils.toPascalCase(name);
     }
 }

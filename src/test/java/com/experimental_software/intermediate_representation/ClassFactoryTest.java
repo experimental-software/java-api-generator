@@ -9,7 +9,8 @@ import static org.hamcrest.Matchers.is;
 import org.junit.jupiter.api.Test;
 
 import com.experimental_software.TestResource;
-import com.experimental_software.element.Type;
+import com.experimental_software.api_generator.element.Type;
+import com.experimental_software.api_generator.intermediate_representation.ClassModelFactory;
 
 public class ClassFactoryTest {
 

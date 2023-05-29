@@ -1,13 +1,12 @@
-package com.experimental_software.code_generation;
-
-import static com.experimental_software.util.StringUtils.toPascalCase;
+package com.experimental_software.api_generator;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import javax.lang.model.element.Modifier;
 
-import com.experimental_software.element.ClassModel;
+import com.experimental_software.api_generator.util.StringUtils;
+import com.experimental_software.api_generator.element.ClassModel;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
@@ -19,7 +18,7 @@ public class CodeGenerator {
         List<MethodSpec> methodSpecs = new ArrayList<>();
 
         for (var a : classModel.getAttributes()) {
-            var getter = MethodSpec.methodBuilder("get" + toPascalCase(a.getName()))
+            var getter = MethodSpec.methodBuilder("get" + StringUtils.toPascalCase(a.getName()))
                 .addModifiers(Modifier.PUBLIC)
                 .addModifiers(Modifier.ABSTRACT)
                 .addJavadoc(a.getDescription())

@@ -1,4 +1,4 @@
-package com.experimental_software.intermediate_representation;
+package com.experimental_software.api_generator.intermediate_representation;
 
 import java.util.List;
 

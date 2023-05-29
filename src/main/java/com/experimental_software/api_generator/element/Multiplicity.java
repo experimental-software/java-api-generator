@@ -1,4 +1,4 @@
-package com.experimental_software.element;
+package com.experimental_software.api_generator.element;
 
 public enum Multiplicity {
 

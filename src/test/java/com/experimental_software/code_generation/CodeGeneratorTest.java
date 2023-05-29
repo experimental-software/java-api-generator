@@ -8,7 +8,8 @@ import static org.hamcrest.Matchers.not;
 import org.junit.jupiter.api.Test;
 
 import com.experimental_software.TestResource;
-import com.experimental_software.intermediate_representation.ClassModelFactory;
+import com.experimental_software.api_generator.CodeGenerator;
+import com.experimental_software.api_generator.intermediate_representation.ClassModelFactory;
 
 public class CodeGeneratorTest {
 

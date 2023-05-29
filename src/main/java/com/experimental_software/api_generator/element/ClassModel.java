@@ -1,9 +1,9 @@
-package com.experimental_software.element;
-
-import static com.experimental_software.util.StringUtils.toPascalCase;
+package com.experimental_software.api_generator.element;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import com.experimental_software.api_generator.util.StringUtils;
 
 import lombok.Builder;
 import lombok.Getter;
@@ -25,7 +25,7 @@ public class ClassModel {
     private final List<Attribute> attributes;
 
     public String getName() {
-        return toPascalCase(name);
+        return StringUtils.toPascalCase(name);
     }
 
     public List<Type> getBaseTypes() {

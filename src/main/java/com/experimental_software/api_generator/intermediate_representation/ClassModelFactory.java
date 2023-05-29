@@ -1,16 +1,16 @@
-package com.experimental_software.intermediate_representation;
+package com.experimental_software.api_generator.intermediate_representation;
 
 import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.experimental_software.element.Attribute;
-import com.experimental_software.element.ClassModel;
-import com.experimental_software.element.Function;
-import com.experimental_software.element.Multiplicity;
-import com.experimental_software.element.Parameter;
-import com.experimental_software.element.Type;
+import com.experimental_software.api_generator.element.Parameter;
+import com.experimental_software.api_generator.element.Attribute;
+import com.experimental_software.api_generator.element.ClassModel;
+import com.experimental_software.api_generator.element.Function;
+import com.experimental_software.api_generator.element.Multiplicity;
+import com.experimental_software.api_generator.element.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("unchecked")
