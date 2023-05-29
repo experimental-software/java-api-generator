@@ -4,7 +4,6 @@ import static java.util.stream.Collectors.toList;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 import com.experimental_software.element.Attribute;
 import com.experimental_software.element.ClassModel;
@@ -12,73 +11,68 @@ import com.experimental_software.element.Function;
 import com.experimental_software.element.Multiplicity;
 import com.experimental_software.element.Parameter;
 import com.experimental_software.element.Type;
-import com.jayway.jsonpath.DocumentContext;
-import com.jayway.jsonpath.JsonPath;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("unchecked")
 public class ClassModelFactory {
 
-    private final DocumentContext json;
+    private final IR ir;
 
     public ClassModelFactory(String json) {
-        this.json = JsonPath.parse(json);
+        try {
+            var objectMapper = new ObjectMapper();
+            ir = objectMapper.readValue(json, IR.class);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public ClassModel create() {
-        List<String> baseTypesRaw = json.read("$.meta_info.base_types[*]");
-        List<Map<String, String>> attributesRaw = json.read("$.attributes[*]");
-
         return ClassModel.builder()
-            .name(json.read("$.meta_info.name"))
-            .description(json.read("$.meta_info.description"))
-            .baseTypes(baseTypesRaw.stream().map(Type::new).collect(toList()))
-            .attributes(parseAttributes(attributesRaw))
-            .functions(parseFunctions(json.read("$.functions[*]")))
+            .name(ir.meta_info().name())
+            .description(ir.meta_info().description())
+            .baseTypes(
+                ir.meta_info().base_types() != null ?
+                    ir.meta_info().base_types().stream().map(Type::new).collect(toList())
+                    : null
+            )
+            .attributes(getAttributes())
+            .functions(getFunctions())
             .build();
     }
 
-    @SuppressWarnings("rawtypes")
-    private static List<Function> parseFunctions(List functionsRaw) {
+    private List<Function> getFunctions() {
         List<Function> result = new ArrayList<>();
-        for (int i = 0; i < functionsRaw.size(); i++) {
-            var element = (Map) functionsRaw.get(i);
-            var description = element.get("meaning").toString();
-            var name = element.get("name").toString();
-            var returnType = new Type(element.get("return_type").toString());
 
-            List<Parameter> parameters = new ArrayList<>();
-            var parametersRaw = (List) element.get("parameters");
-            parametersRaw.forEach(p -> {
-                var parameterRaw = (Map) p;
-                parameters.add(
-                  Parameter.builder()
-                      .name(parameterRaw.get("name").toString())
-                      .type(new Type(parameterRaw.get("name").toString()))
-                      .build()
-                );
-            });
-
+        for (var function : ir.functions()) {
             result.add(
-                Function.builder()
-                    .name(name)
-                    .description(description)
-                    .returnType(returnType)
-                    .parameters(parameters)
-                    .build()
+              Function.builder()
+                  .name(function.name())
+                  .description(function.meaning())
+                  .parameters(
+                      function.parameters().stream().map(
+                          p -> Parameter.builder()
+                              .name(p.name())
+                              .type(new Type(p.type()))
+                              .build()
+                          )
+                          .collect(toList())
+                  )
+                  .build()
             );
         }
         return result;
     }
 
-    private static List<Attribute> parseAttributes(List<Map<String, String>> attributesRaw) {
+    private List<Attribute> getAttributes() {
         List<Attribute> result = new ArrayList<>();
-        for (var attributeRaw : attributesRaw) {
+        for (var attribute : ir.attributes()) {
             result.add(
                 Attribute.builder()
-                    .description(attributeRaw.get("description"))
-                    .name(attributeRaw.get("name"))
-                    .multiplicity(parseMultiplicity(attributeRaw.get("multiplicity")))
-                    .type(new Type(attributeRaw.get("type")))
+                    .description(attribute.description())
+                    .name(attribute.name())
+                    .multiplicity(parseMultiplicity(attribute.multiplicity()))
+                    .type(new Type(attribute.type()))
                     .build()
             );
         }
