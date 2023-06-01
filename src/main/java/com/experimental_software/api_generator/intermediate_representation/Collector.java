@@ -21,13 +21,19 @@ public class Collector {
     }
 
     void collectIrModels(File projectRoot) {
-        collectIrModels(projectRoot.listFiles());
+        File[] files = projectRoot.listFiles();
+        if (files != null) {
+            collectIrModels(files);
+        }
     }
 
     void collectIrModels(File[] files) {
         for (var file : files) {
             if (file.isDirectory()) {
-                collectIrModels(file.listFiles());
+                File[] f = file.listFiles();
+                if (f != null) {
+                    collectIrModels(f);
+                }
             } else {
                 // FIXME: This won't work on Windows
                 if (file.getAbsolutePath().contains("src/main/java") && file.getAbsolutePath().endsWith(".json")) {
