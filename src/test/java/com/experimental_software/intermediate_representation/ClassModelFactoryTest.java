@@ -12,7 +12,7 @@ import com.experimental_software.TestResource;
 import com.experimental_software.api_generator.element.Type;
 import com.experimental_software.api_generator.intermediate_representation.ClassModelFactory;
 
-public class ClassFactoryTest {
+public class ClassModelFactoryTest {
 
     @Test
     public void testLoadSimpleClass() {

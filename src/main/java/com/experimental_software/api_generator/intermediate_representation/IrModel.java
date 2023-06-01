@@ -5,5 +5,8 @@ import java.io.File;
 import lombok.Builder;
 
 @Builder
-public record IrModel(String packageName, String json, File path) {
-}
+public record IrModel(
+    String packageName,
+    String json,
+    File path
+) {}
