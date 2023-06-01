@@ -5,12 +5,12 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.experimental_software.api_generator.element.Parameter;
-import com.experimental_software.api_generator.element.Attribute;
-import com.experimental_software.api_generator.element.ClassModel;
-import com.experimental_software.api_generator.element.Function;
-import com.experimental_software.api_generator.element.Multiplicity;
-import com.experimental_software.api_generator.element.Type;
+import com.experimental_software.api_generator.openehr_element.Parameter;
+import com.experimental_software.api_generator.openehr_element.Attribute;
+import com.experimental_software.api_generator.openehr_element.ClassModel;
+import com.experimental_software.api_generator.openehr_element.Function;
+import com.experimental_software.api_generator.openehr_element.Multiplicity;
+import com.experimental_software.api_generator.openehr_element.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SuppressWarnings("unchecked")

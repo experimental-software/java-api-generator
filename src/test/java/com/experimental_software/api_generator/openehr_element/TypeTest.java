@@ -1,11 +1,11 @@
-package com.experimental_software.api_generator.code_generation;
+package com.experimental_software.api_generator.openehr_element;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 
-import com.experimental_software.api_generator.element.Type;
+import com.experimental_software.api_generator.openehr_element.Type;
 
 public class TypeTest {
 

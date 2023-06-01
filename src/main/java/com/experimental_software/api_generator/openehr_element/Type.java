@@ -1,4 +1,4 @@
-package com.experimental_software.api_generator.element;
+package com.experimental_software.api_generator.openehr_element;
 
 import com.experimental_software.api_generator.util.StringUtils;
 

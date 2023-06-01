@@ -6,7 +6,7 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 import com.experimental_software.api_generator.util.StringUtils;
-import com.experimental_software.api_generator.element.ClassModel;
+import com.experimental_software.api_generator.openehr_element.ClassModel;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;

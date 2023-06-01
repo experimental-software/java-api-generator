@@ -1,4 +1,4 @@
-package com.experimental_software.api_generator.element;
+package com.experimental_software.api_generator.openehr_element;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
