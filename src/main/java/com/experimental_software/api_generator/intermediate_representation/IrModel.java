@@ -8,5 +8,5 @@ import lombok.Builder;
 public record IrModel(
     String packageName,
     String json,
-    File path
+    File file
 ) {}

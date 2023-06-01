@@ -14,7 +14,7 @@ import com.squareup.javapoet.TypeSpec;
 
 public class CodeGenerator {
 
-    public String generateInterface(String packageName, ClassModel classModel) {
+    public static String generateInterface(String packageName, ClassModel classModel) {
         List<MethodSpec> methodSpecs = new ArrayList<>();
 
         for (var a : classModel.getAttributes()) {

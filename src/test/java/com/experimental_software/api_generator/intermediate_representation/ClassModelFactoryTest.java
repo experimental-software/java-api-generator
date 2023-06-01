@@ -1,4 +1,4 @@
-package com.experimental_software.intermediate_representation;
+package com.experimental_software.api_generator.intermediate_representation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.contains;

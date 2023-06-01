@@ -38,10 +38,17 @@ public class Collector {
                 // FIXME: This won't work on Windows
                 if (file.getAbsolutePath().contains("src/main/java") && file.getAbsolutePath().endsWith(".json")) {
                     result.add(IrModel.builder()
-                        .path(file)
+                        .file(file)
+                        .packageName(parsePackageName(file.getAbsolutePath()))
                         .build());
                 }
             }
         }
+    }
+
+    static String parsePackageName(String filePath) {
+        var pathWithoutSourceSet = filePath.substring(filePath.indexOf("src/main/java") + "src/main/java".length() + 1);
+        var pathWithoutFileName = pathWithoutSourceSet.substring(0, pathWithoutSourceSet.lastIndexOf("/"));
+        return pathWithoutFileName.replaceAll("/", ".");
     }
 }

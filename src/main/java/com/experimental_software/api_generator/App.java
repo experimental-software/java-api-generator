@@ -20,6 +20,8 @@ public class App {
         for (var irModel : irModels) {
             System.out.println(irModel);
         }
+
+        // CodeGenerator.generateInterface()
     }
 
     static class Args {
