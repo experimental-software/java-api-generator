@@ -21,9 +21,9 @@ public class App {
             System.out.println(irModel);
         }
     }
-}
 
-class Args {
-    @Parameter(names={"--project-root", "-r"}, required = true)
-    String projectRoot;
+    static class Args {
+        @Parameter(names={"--project-root", "-r"}, required = true)
+        String projectRoot;
+    }
 }

@@ -1,4 +1,4 @@
-package com.experimental_software.api_generator;
+package com.experimental_software.api_generator.code_generation;
 
 import java.util.ArrayList;
 import java.util.List;
