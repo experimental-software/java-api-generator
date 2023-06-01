@@ -1,4 +1,4 @@
-package com.experimental_software.code_generation;
+package com.experimental_software.api_generator.code_generation;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;

@@ -1,10 +1,8 @@
-package com.experimental_software.element;
+package com.experimental_software.api_generator.element;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-
-import com.experimental_software.api_generator.element.ClassModel;
 
 public class ClassModelTest {
 

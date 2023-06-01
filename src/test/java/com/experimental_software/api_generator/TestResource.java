@@ -1,4 +1,4 @@
-package com.experimental_software;
+package com.experimental_software.api_generator;
 
 import java.nio.file.Files;
 import java.nio.file.Path;

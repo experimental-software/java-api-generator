@@ -1,10 +1,8 @@
-package com.experimental_software.util;
+package com.experimental_software.api_generator.util;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 import org.junit.jupiter.api.Test;
-
-import com.experimental_software.api_generator.util.StringUtils;
 
 /**
  * @see <a href="https://docs.brickhub.dev/brick-syntax#built-in-lambdas>Built-in Lambdas | docs.brickhub.dev</a>
