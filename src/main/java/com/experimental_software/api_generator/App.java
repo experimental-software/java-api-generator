@@ -4,6 +4,9 @@ import java.io.File;
 
 import com.beust.jcommander.JCommander;
 import com.beust.jcommander.Parameter;
+import com.experimental_software.api_generator.code_generation.CodeGenerator;
+import com.experimental_software.api_generator.code_generation.JavaFileWriter;
+import com.experimental_software.api_generator.intermediate_representation.ClassModelFactory;
 import com.experimental_software.api_generator.intermediate_representation.Collector;
 
 public class App {
@@ -14,19 +17,14 @@ public class App {
             .addObject(args)
             .build()
             .parse(argv);
-        System.out.printf("Project root: %s%n", args.projectRoot);
 
         var irModels = Collector.findIrModels(new File(args.projectRoot));
-        for (var irModel : irModels) {
-            System.out.println(irModel);
+        for (var ir : irModels) {
+            var classModel = new ClassModelFactory(ir.json()).create();
+            var javaCode = CodeGenerator.generateInterface(ir.packageName(), classModel);
 
-
-
-//            var classModel = new ClassModelFactory(json).create();
-            // CodeGenerator.generateInterface(packageName, classModel);
+            new JavaFileWriter(ir.getJavaPath(), javaCode).writeToDisk();
         }
-
-        // CodeGenerator.generateInterface()
     }
 
     static class Args {

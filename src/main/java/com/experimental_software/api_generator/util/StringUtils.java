@@ -6,6 +6,7 @@ import java.util.List;
 
 import lombok.AccessLevel;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
@@ -13,7 +14,7 @@ public class StringUtils {
     /**
      * @see <a href="https://en.wiktionary.org/wiki/Pascal_case">Pascal case</a>
      */
-    public static String toPascalCase(String string) {
+    public static String toPascalCase(@NonNull String string) {
         List<String> words = new ArrayList<>();
         for (var word : string.split("[_\s]")) {
             var normalizedWord = word;

@@ -17,7 +17,7 @@ public class CodeGeneratorTest {
         var json = new TestResource("VersionedFolder.json").readString();
         var classModel = new ClassModelFactory(json).create();
 
-        var result = new CodeGenerator().generateInterface("org.openehr.test", classModel);
+        var result = CodeGenerator.generateInterface("org.openehr.test", classModel).toString();
 
         assertThat(result, not(emptyString()));
         assertThat(result, containsString("extends VersionedObject"));
