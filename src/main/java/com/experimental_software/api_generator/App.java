@@ -19,6 +19,11 @@ public class App {
         var irModels = Collector.findIrModels(new File(args.projectRoot));
         for (var irModel : irModels) {
             System.out.println(irModel);
+
+
+
+//            var classModel = new ClassModelFactory(json).create();
+            // CodeGenerator.generateInterface(packageName, classModel);
         }
 
         // CodeGenerator.generateInterface()

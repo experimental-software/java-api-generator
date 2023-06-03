@@ -39,6 +39,7 @@ public class Collector {
                 if (file.getAbsolutePath().contains("src/main/java") && file.getAbsolutePath().endsWith(".json")) {
                     result.add(IrModel.builder()
                         .file(file)
+                        .json(new TextFile(file).readAsString())
                         .packageName(parsePackageName(file.getAbsolutePath()))
                         .build());
                 }
