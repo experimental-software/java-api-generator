@@ -20,6 +20,7 @@ class TextFile {
         }
     }
 
+    // TODO: Remove this constructor
     public TextFile(String resourcePath) {
         var normalizedPath = resourcePath;
         if (!normalizedPath.startsWith("/")) {
