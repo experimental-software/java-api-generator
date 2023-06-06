@@ -14,5 +14,11 @@ public class StringUtilsTest {
         assertEquals("HelloWorld", StringUtils.toPascalCase("HELLO_WORLD"));
         assertEquals("HelloWorld", StringUtils.toPascalCase("HelloWorld"));
         assertEquals("Iso8601Date", StringUtils.toPascalCase("Iso8601_date"));
+        assertEquals("List<ReferenceRange<DvCount>>", StringUtils.toPascalCase("List<REFERENCE_RANGE<DV_COUNT>>"));
+    }
+
+    @Test
+    public void testLowerCamelCaseTransformation() {
+        assertEquals("helloWorld", StringUtils.toLowerCamelCase("hello_world"));
     }
 }

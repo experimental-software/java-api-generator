@@ -1,6 +1,5 @@
 package com.experimental_software.api_generator.util;
 
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -40,12 +39,14 @@ public class StringUtils {
     private static String typeParameterToPascalCase(String string) {
         List<String> types = new ArrayList<>();
 
-        var typeParameterDetails = Pattern.compile("<(.*)>")
+        var m = Pattern.compile("<(.*)>")
             .matcher(string)
             .results()
-            .findFirst()
-            .orElseThrow()
-            .group(1);
+            .findFirst();
+        if (m.isEmpty()) {
+            throw new RuntimeException("Could not find type parameter in: " + string);
+        }
+        var typeParameterDetails = m.get().group(1);
 
         for (var type : typeParameterDetails.split(",")) {
             var normalizedType = type.strip();
@@ -54,5 +55,24 @@ public class StringUtils {
         }
 
         return String.format("<%s>", String.join(",", types));
+    }
+
+    /**
+     * @see <a href="https://wiki.c2.com/?LowerCamelCase">Lower Camel Case | wiki.c2.com</a>
+     */
+    public static String toLowerCamelCase(@NonNull String string) {
+        var sb = new StringBuilder();
+        var parts = string.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            String normalizedPart;
+            if (i == 0) {
+                normalizedPart = part.toLowerCase();
+            } else {
+                normalizedPart = org.apache.commons.lang3.StringUtils.capitalize(part);
+            }
+            sb.append(normalizedPart);
+        }
+        return sb.toString();
     }
 }
