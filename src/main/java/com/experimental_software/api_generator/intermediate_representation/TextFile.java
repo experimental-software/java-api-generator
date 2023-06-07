@@ -20,20 +20,6 @@ class TextFile {
         }
     }
 
-    // TODO: Remove this constructor
-    public TextFile(String resourcePath) {
-        var normalizedPath = resourcePath;
-        if (!normalizedPath.startsWith("/")) {
-            normalizedPath = "/" + normalizedPath;
-        }
-
-        inputStream = getClass().getResourceAsStream(normalizedPath);
-
-        if (inputStream == null) {
-            throw new RuntimeException("Resource not found: " + normalizedPath);
-        }
-    }
-
     public String readAsString() {
         try {
             return new String(inputStream.readAllBytes());
