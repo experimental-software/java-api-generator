@@ -2,13 +2,12 @@ package com.experimental_software.api_generator.openehr_element;
 
 import static com.experimental_software.api_generator.util.StringUtils.toLowerCamelCase;
 
-import com.experimental_software.api_generator.util.StringUtils;
-
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+// TODO: Rename to ParameterModel
 @RequiredArgsConstructor
 @Getter
 @Builder

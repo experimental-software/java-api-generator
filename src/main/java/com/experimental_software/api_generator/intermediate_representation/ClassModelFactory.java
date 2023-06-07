@@ -58,6 +58,7 @@ public class ClassModelFactory {
                           )
                           .collect(toList())
                   )
+                  .returnType(new Type(function.return_type()))
                   .build()
             );
         }

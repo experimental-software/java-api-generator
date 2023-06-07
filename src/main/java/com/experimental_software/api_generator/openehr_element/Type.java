@@ -7,6 +7,7 @@ import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import lombok.ToString;
 
+// TODO: Rename to TypeModel
 @RequiredArgsConstructor
 @EqualsAndHashCode
 @ToString

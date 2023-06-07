@@ -6,10 +6,13 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 import com.experimental_software.api_generator.openehr_element.ClassModel;
+import com.experimental_software.api_generator.openehr_element.Function;
 import com.experimental_software.api_generator.util.StringUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 public class CodeGenerator {
@@ -35,13 +38,31 @@ public class CodeGenerator {
 
     private static void readFunctions(ClassModel classModel, List<MethodSpec> methodSpecs) {
         for (var f : classModel.getFunctions()) {
+
+            List<ParameterSpec> parameters = new ArrayList<>();
+            for (var p : f.getParameters()) {
+                var type = ClassName.bestGuess(p.getType().getName());
+                var parameterSpec = ParameterSpec.builder(type, p.getName()).build();
+                parameters.add(parameterSpec);
+            }
+
             var method = MethodSpec.methodBuilder(f.getName())
                 .addModifiers(Modifier.PUBLIC)
                 .addModifiers(Modifier.ABSTRACT)
                 .addJavadoc(f.getDescription())
+                .returns(getReturnType(f))
+                .addParameters(parameters)
                 .build();
+
             methodSpecs.add(method);
         }
+    }
+
+    private static TypeName getReturnType(Function function) {
+        if (function.getReturnType() == null) {
+            return TypeName.VOID;
+        }
+        return ClassName.bestGuess(function.getReturnType().getName());
     }
 
     private static void readSuperinterfaces(ClassModel classModel, List<ClassName> superinterfaces) {

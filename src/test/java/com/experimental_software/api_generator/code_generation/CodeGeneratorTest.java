@@ -31,5 +31,6 @@ public class CodeGeneratorTest {
         var result = CodeGenerator.generateInterface("org.openehr.test", classModel).toString();
 
         assertThat(result, not(emptyString()));
+        assertThat(result, containsString("Boolean lessThan(Object other);"));
     }
 }

@@ -10,6 +10,7 @@ import lombok.Getter;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 
+// TODO: Rename to FunctionModel
 @RequiredArgsConstructor
 @Getter
 @Builder

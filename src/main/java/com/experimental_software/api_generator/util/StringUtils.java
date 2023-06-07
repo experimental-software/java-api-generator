@@ -12,6 +12,7 @@ import lombok.NonNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
 
+    // TODO: Refactor to `new CaseTransformer(string).toPascalCase()`
     /**
      * @see <a href="https://en.wiktionary.org/wiki/Pascal_case">Pascal case</a>
      */
