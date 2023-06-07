@@ -6,7 +6,20 @@ plugins {
 
 repositories {
     mavenCentral()
+
+    maven {
+        url = uri('https://maven.pkg.github.com/openehr-java-api/openehr-rm-java')
+        credentials {
+            username = project.findProperty('gpr.user')
+            password = project.findProperty('gpr.key')
+        }
+    }
 }
+
+ext['openehrAmVersion'] = '2.2.0-alpha-2'
+ext['openehrBaseVersion'] = '1.2.0-alpha-1'
+ext['openehrRmVersion'] = '1.1.0-alpha-2'
+ext['openehrTermVersion'] = '2.4.0-alpha-3'
 
 dependencies {
     implementation 'com.beust:jcommander:1.82'
@@ -14,7 +27,20 @@ dependencies {
     implementation 'com.squareup:javapoet:1.13.0'
     implementation 'org.apache.commons:commons-lang3:3.12.0'
 
-    // TODO Add dependency on generated API packages, so that the package names can get inferred.
+    // Dependencies on generated packages, to be able to infer import paths
+    implementation "com.experimental-software.java-api:openehr-am-aom2:${openehrAmVersion}"
+    implementation "com.experimental-software.java-api:openehr-base-base-types:${openehrBaseVersion}"
+    implementation "com.experimental-software.java-api:openehr-base-foundation-types:${openehrBaseVersion}"
+    implementation "com.experimental-software.java-api:openehr-base-resource-model:${openehrBaseVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-common:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-data-structures:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-data-types:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-demographic:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-ehr-extract:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-ehr:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-integration:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-rm-support:${openehrRmVersion}"
+    implementation "com.experimental-software.java-api:openehr-term-support-terminology:${openehrTermVersion}"
 
     testImplementation 'org.junit.jupiter:junit-jupiter:5.9.1'
     testImplementation 'org.hamcrest:hamcrest:2.2'
