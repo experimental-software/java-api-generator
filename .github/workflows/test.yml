@@ -40,4 +40,4 @@ jobs:
           if [[ -n "${SONAR_TOKEN}" ]]; then
             SONAR_TASK="sonarqube"
           fi
-          ./gradlew build ${SONAR_TASK} --info
+          ./gradlew build ${SONAR_TASK} --info -Pgpr.user=${{ github.actor }} -Pgpr.key=${{ secrets.GITHUB_TOKEN }}
