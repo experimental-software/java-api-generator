@@ -4,6 +4,7 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 
+// TODO: Rename to AttributeModel
 @RequiredArgsConstructor
 @Getter
 @Builder

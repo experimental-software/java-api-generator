@@ -6,17 +6,77 @@ import java.util.List;
 import javax.lang.model.element.Modifier;
 
 import com.experimental_software.api_generator.openehr_element.ClassModel;
+import com.experimental_software.api_generator.openehr_element.Function;
 import com.experimental_software.api_generator.util.StringUtils;
 import com.squareup.javapoet.ClassName;
 import com.squareup.javapoet.JavaFile;
 import com.squareup.javapoet.MethodSpec;
+import com.squareup.javapoet.ParameterSpec;
+import com.squareup.javapoet.TypeName;
 import com.squareup.javapoet.TypeSpec;
 
 public class CodeGenerator {
 
     public static JavaFile generateInterface(String packageName, ClassModel classModel) {
         List<MethodSpec> methodSpecs = new ArrayList<>();
+        List<ClassName> superinterfaces = new ArrayList<>();
 
+        readAttributes(classModel, methodSpecs);
+        readFunctions(classModel, methodSpecs);
+        readSuperinterfaces(classModel, superinterfaces);
+
+        var typeSpec = TypeSpec
+            .interfaceBuilder(classModel.getName())
+            .addSuperinterfaces(superinterfaces)
+            .addModifiers(Modifier.PUBLIC)
+            .addMethods(methodSpecs)
+            .addJavadoc(classModel.getDescription())
+            .build();
+
+        return JavaFile.builder(packageName, typeSpec).build();
+    }
+
+    private static void readFunctions(ClassModel classModel, List<MethodSpec> methodSpecs) {
+        for (var f : classModel.getFunctions()) {
+
+            List<ParameterSpec> parameters = new ArrayList<>();
+            for (var p : f.getParameters()) {
+                var type = ClassName.bestGuess(p.getType().getName());
+                var parameterSpec = ParameterSpec.builder(type, p.getName()).build();
+                parameters.add(parameterSpec);
+            }
+
+            var method = MethodSpec.methodBuilder(f.getName())
+                .addModifiers(Modifier.PUBLIC)
+                .addModifiers(Modifier.ABSTRACT)
+                .addJavadoc(f.getDescription())
+                .returns(getReturnType(f))
+                .addParameters(parameters)
+                .build();
+
+            methodSpecs.add(method);
+        }
+    }
+
+    private static TypeName getReturnType(Function function) {
+        if (function.getReturnType() == null) {
+            return TypeName.VOID;
+        }
+        return ClassName.bestGuess(function.getReturnType().getName());
+    }
+
+    private static void readSuperinterfaces(ClassModel classModel, List<ClassName> superinterfaces) {
+        for (var t : classModel.getBaseTypes()) {
+            try {
+                var n = ClassName.bestGuess(t.getName());
+                superinterfaces.add(n);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    private static void readAttributes(ClassModel classModel, List<MethodSpec> methodSpecs) {
         for (var a : classModel.getAttributes()) {
             if (a.getName() == null) {
                 // TODO: Log warning or throw exception in strict mode
@@ -31,35 +91,5 @@ public class CodeGenerator {
                 .build();
             methodSpecs.add(getter);
         }
-
-        for (var f : classModel.getFunctions()) {
-            var method = MethodSpec.methodBuilder(f.getName())
-                .addModifiers(Modifier.PUBLIC)
-                .addModifiers(Modifier.ABSTRACT)
-                .addJavadoc(f.getDescription())
-                .build();
-            methodSpecs.add(method);
-        }
-
-        List<ClassName> superinterfaces = new ArrayList<>();
-        for (var t : classModel.getBaseTypes()) {
-            try {
-                var n = ClassName.bestGuess(t.getName());
-                superinterfaces.add(n);
-            } catch (Exception e) {
-                throw new RuntimeException(e);
-            }
-        }
-
-        var typeSpec = TypeSpec
-            .interfaceBuilder(classModel.getName())
-            .addSuperinterfaces(superinterfaces)
-            .addModifiers(Modifier.PUBLIC)
-            .addMethods(methodSpecs)
-            .addJavadoc(classModel.getDescription())
-            .build();
-
-        return JavaFile.builder(packageName, typeSpec)
-            .build();
     }
 }

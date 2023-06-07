@@ -22,4 +22,15 @@ public class CodeGeneratorTest {
         assertThat(result, not(emptyString()));
         assertThat(result, containsString("extends VersionedObject"));
     }
+
+    @Test
+    public void testGenerateInterfaceWithMethod() {
+        var json = new TestResource("DvCount.json").readString();
+        var classModel = new ClassModelFactory(json).create();
+
+        var result = CodeGenerator.generateInterface("org.openehr.test", classModel).toString();
+
+        assertThat(result, not(emptyString()));
+        assertThat(result, containsString("Boolean lessThan(Object other);"));
+    }
 }

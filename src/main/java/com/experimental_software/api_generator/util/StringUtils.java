@@ -12,6 +12,7 @@ import lombok.NonNull;
 @NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class StringUtils {
 
+    // TODO: Refactor to `new CaseTransformer(string).toPascalCase()`
     /**
      * @see <a href="https://en.wiktionary.org/wiki/Pascal_case">Pascal case</a>
      */
@@ -59,5 +60,24 @@ public class StringUtils {
             }
         }
         return normalizedTypeParameters.toString();
+    }
+
+    /**
+     * @see <a href="https://wiki.c2.com/?LowerCamelCase">Lower Camel Case | wiki.c2.com</a>
+     */
+    public static String toLowerCamelCase(@NonNull String string) {
+        var sb = new StringBuilder();
+        var parts = string.split("_");
+        for (int i = 0; i < parts.length; i++) {
+            var part = parts[i];
+            String normalizedPart;
+            if (i == 0) {
+                normalizedPart = part.toLowerCase();
+            } else {
+                normalizedPart = org.apache.commons.lang3.StringUtils.capitalize(part);
+            }
+            sb.append(normalizedPart);
+        }
+        return sb.toString();
     }
 }

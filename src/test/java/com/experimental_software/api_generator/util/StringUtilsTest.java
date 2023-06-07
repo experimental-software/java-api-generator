@@ -23,4 +23,9 @@ public class StringUtilsTest {
     public void testFailPascalCaseTransformation() {
         assertThrows(IllegalArgumentException.class, () -> StringUtils.toPascalCase("Hash<FOO_BAR,SPAM_EGGS"));
     }
+
+    @Test
+    public void testLowerCamelCaseTransformation() {
+        assertEquals("helloWorld", StringUtils.toLowerCamelCase("hello_world"));
+    }
 }
