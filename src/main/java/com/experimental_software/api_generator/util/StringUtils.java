@@ -1,5 +1,6 @@
 package com.experimental_software.api_generator.util;
 
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Pattern;
@@ -16,11 +17,10 @@ public class StringUtils {
      */
     public static String toPascalCase(@NonNull final String string) {
         if (string.contains("<")) {
-            var parts = string.split("<");
-            var beforeTypeParameters = toPascalCase(parts[0]);
-            var typeParameters = typeParameterToPascalCase("<" + parts[1]);
+            var normalizedTypeParameters = typeParametersToPascalCase(parseTypeParameters(string));
+            var normalizedType = toPascalCase(string.substring(0, string.indexOf("<")));
 
-            return beforeTypeParameters + typeParameters;
+            return String.format("%s<%s>", normalizedType, normalizedTypeParameters);
         }
 
         List<String> words = new ArrayList<>();
@@ -36,25 +36,29 @@ public class StringUtils {
         return String.join("", words);
     }
 
-    private static String typeParameterToPascalCase(String string) {
-        List<String> types = new ArrayList<>();
-
+    private static String[] parseTypeParameters(String string) {
         var m = Pattern.compile("<(.*)>")
             .matcher(string)
             .results()
             .findFirst();
         if (m.isEmpty()) {
-            throw new RuntimeException("Could not find type parameter in: " + string);
+            throw new IllegalArgumentException("Could not parse type parameters from: " + string);
         }
-        var typeParameterDetails = m.get().group(1);
+        return m.get().group(1).split(",");
+    }
 
-        for (var type : typeParameterDetails.split(",")) {
-            var normalizedType = type.strip();
+    private static String typeParametersToPascalCase(String[] originalTypeParameters) {
+        var normalizedTypeParameters = new StringBuilder();
+        for (int i = 0; i < originalTypeParameters.length; i++) {
+            var originalType = originalTypeParameters[i];
+            var normalizedType = originalType.strip();
             normalizedType = toPascalCase(normalizedType);
-            types.add(normalizedType);
+            normalizedTypeParameters.append(normalizedType);
+            if (i + 1 < originalTypeParameters.length) {
+                normalizedTypeParameters.append(",");
+            }
         }
-
-        return String.format("<%s>", String.join(",", types));
+        return normalizedTypeParameters.toString();
     }
 
     /**
