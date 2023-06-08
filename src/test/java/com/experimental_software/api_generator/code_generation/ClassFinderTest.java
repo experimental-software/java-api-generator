@@ -5,11 +5,11 @@ import static org.hamcrest.Matchers.is;
 
 import org.junit.jupiter.api.Test;
 
-public class ClassNameFinderTest {
+public class ClassFinderTest {
 
     @Test
     public void testInferImportPath() {
-        var result = new ClassNameFinder("DvCount").getImport();
+        var result = new ClassFinder("DvCount").getImport();
 
         assertThat(result, is("org.openehr.rm_data_types.quantity.DvCount"));
     }

@@ -8,7 +8,7 @@ import com.google.common.reflect.ClassPath;
 import lombok.RequiredArgsConstructor;
 
 @RequiredArgsConstructor
-public class ClassNameFinder {
+public class ClassFinder {
 
     private final String simpleClassName;
 
@@ -26,11 +26,11 @@ public class ClassNameFinder {
             .findFirst()
             .orElseThrow();
     }
-    // TODO: If running in strict mode, raise exception if multiple classes or no class are found.
+    // TODO: If running in strict mode, raise exception if multiple classes are found.
 
     @SuppressWarnings("UnstableApiUsage")
     private static ImmutableSet<ClassPath.ClassInfo> getAllOpenEhrClasses() {
-        var cl = ClassNameFinder.class.getClassLoader();
+        var cl = ClassFinder.class.getClassLoader();
         try {
             return ClassPath.from(cl).getTopLevelClassesRecursive("org.openehr");
         } catch (IOException e) {
