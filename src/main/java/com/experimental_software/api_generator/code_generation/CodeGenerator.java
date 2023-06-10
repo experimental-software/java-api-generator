@@ -44,7 +44,7 @@ public class CodeGenerator {
 
             List<ParameterSpec> parameters = new ArrayList<>();
             for (var p : f.getParameters()) {
-                var type = bestGuess(p.getType().getName());
+                var type = getClassName(p.getType().getName());
                 var parameterSpec = ParameterSpec.builder(type, p.getName()).build();
                 parameters.add(parameterSpec);
             }
@@ -65,7 +65,7 @@ public class CodeGenerator {
         if (function.getReturnType() == null) {
             return TypeName.VOID;
         }
-        return bestGuess(function.getReturnType().getName());
+        return getClassName(function.getReturnType().getName());
     }
 
     private static void readSuperinterfaces(ClassModel classModel, List<ClassName> superinterfaces) {

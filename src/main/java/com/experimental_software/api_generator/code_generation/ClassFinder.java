@@ -29,12 +29,11 @@ public class ClassFinder {
     /**
      * Returns the import path of the class e.g. "org.openehr.rm_data_types.quantity.DvCount".
      */
-    public String getImport() {
+    public Optional<String> getImport() {
         return getAllOpenEhrClasses().stream()
             .map(ClassPath.ClassInfo::getName)
             .filter(name -> name.endsWith(simpleClassName))
-            .findFirst()
-            .orElseThrow();
+            .findFirst();
     }
     // TODO: If running in strict mode, raise exception if multiple classes are found.
 
