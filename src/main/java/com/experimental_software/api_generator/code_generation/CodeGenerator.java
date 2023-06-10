@@ -1,5 +1,8 @@
 package com.experimental_software.api_generator.code_generation;
 
+import static com.experimental_software.api_generator.code_generation.CodeGenerator.ClassNameUtils.getClassName;
+import static com.squareup.javapoet.ClassName.bestGuess;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,7 +44,7 @@ public class CodeGenerator {
 
             List<ParameterSpec> parameters = new ArrayList<>();
             for (var p : f.getParameters()) {
-                var type = ClassName.bestGuess(p.getType().getName());
+                var type = bestGuess(p.getType().getName());
                 var parameterSpec = ParameterSpec.builder(type, p.getName()).build();
                 parameters.add(parameterSpec);
             }
@@ -62,14 +65,13 @@ public class CodeGenerator {
         if (function.getReturnType() == null) {
             return TypeName.VOID;
         }
-        return ClassName.bestGuess(function.getReturnType().getName());
+        return bestGuess(function.getReturnType().getName());
     }
 
     private static void readSuperinterfaces(ClassModel classModel, List<ClassName> superinterfaces) {
         for (var t : classModel.getBaseTypes()) {
             try {
-                var n = ClassName.bestGuess(t.getName());
-                superinterfaces.add(n);
+                superinterfaces.add(getClassName(t.getName()));
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -87,9 +89,18 @@ public class CodeGenerator {
                 .addModifiers(Modifier.PUBLIC)
                 .addModifiers(Modifier.ABSTRACT)
                 .addJavadoc(a.getDescription())
-                .returns(ClassName.bestGuess(a.getType().getName()))
+                .returns(getClassName(a.getType().getName()))
                 .build();
             methodSpecs.add(getter);
         }
+    }
+
+    static class ClassNameUtils {
+        static ClassName getClassName(String className) {
+            return new ClassFinder(className).getClassRepresentation()
+                .map(ClassName::get)
+                .orElse(bestGuess(className));
+        }
+        // TODO: If running in strict mode, raise exception if class representation could not be found.
     }
 }
