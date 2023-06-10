@@ -97,6 +97,11 @@ public class CodeGenerator {
 
     static class ClassNameUtils {
         static ClassName getClassName(String className) {
+            if (className.equals("T")) {
+                // TODO Add support for generic types
+                return ClassName.get(Object.class);
+            }
+
             return new ClassFinder(className).getClassRepresentation()
                 .map(ClassName::get)
                 .orElse(bestGuess(className));
