@@ -20,7 +20,7 @@ public class ClassFinder {
     @SuppressWarnings("rawtypes")
     public Optional<? extends Class> getClassRepresentation() {
         return getAllOpenEhrClasses().stream()
-            .filter(c -> c.getName().endsWith(simpleClassName))
+            .filter(c -> c.getName().endsWith("." + simpleClassName))
             .map(ClassPath.ClassInfo::load)
             .findFirst();
     }
@@ -32,7 +32,7 @@ public class ClassFinder {
     public Optional<String> getImport() {
         return getAllOpenEhrClasses().stream()
             .map(ClassPath.ClassInfo::getName)
-            .filter(name -> name.endsWith(simpleClassName))
+            .filter(name -> name.endsWith("." + simpleClassName))
             .findFirst();
     }
     // TODO: If running in strict mode, raise exception if multiple classes are found.
