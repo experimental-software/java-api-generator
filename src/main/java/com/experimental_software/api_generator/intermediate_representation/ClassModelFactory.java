@@ -5,14 +5,17 @@ import static java.util.stream.Collectors.toList;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.experimental_software.api_generator.openehr_element.Parameter;
 import com.experimental_software.api_generator.openehr_element.Attribute;
 import com.experimental_software.api_generator.openehr_element.ClassModel;
 import com.experimental_software.api_generator.openehr_element.Function;
 import com.experimental_software.api_generator.openehr_element.Multiplicity;
+import com.experimental_software.api_generator.openehr_element.Parameter;
 import com.experimental_software.api_generator.openehr_element.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import lombok.extern.slf4j.Slf4j;
+
+@Slf4j
 @SuppressWarnings("unchecked")
 public class ClassModelFactory {
 
@@ -68,12 +71,20 @@ public class ClassModelFactory {
     private List<Attribute> getAttributes() {
         List<Attribute> result = new ArrayList<>();
         for (var attribute : ir.attributes()) {
+            var type = attribute.type();
+            if (type == null) {
+                var msg = String.format("Could not find type for attribute with name '%s'.", attribute.name());
+                log.warn(msg);
+                // TODO: Raise exception if running in strict mode, because this state indicates incomplete parsing
+                continue;
+            }
+
             result.add(
                 Attribute.builder()
                     .description(attribute.description())
                     .name(attribute.name())
                     .multiplicity(parseMultiplicity(attribute.multiplicity()))
-                    .type(new Type(attribute.type()))
+                    .type(new Type(type))
                     .build()
             );
         }
