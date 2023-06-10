@@ -14,9 +14,6 @@ public class ClassFinder {
 
     private final String simpleClassName;
 
-    /**
-     * @return the {@link Class} object for the given class name.
-     */
     @SuppressWarnings("rawtypes")
     public Optional<? extends Class> getClassRepresentation() {
         return getAllOpenEhrClasses().stream()
