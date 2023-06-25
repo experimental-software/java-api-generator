@@ -1,15 +1,12 @@
 package com.experimental_software.api_generator.code_generation;
 
-import static org.hamcrest.MatcherAssert.assertThat;
-import static org.hamcrest.Matchers.containsString;
-import static org.hamcrest.Matchers.emptyString;
-import static org.hamcrest.Matchers.not;
-
-import org.junit.jupiter.api.Test;
-import org.openehr.rm_common.change_control.VersionedObject;
-
 import com.experimental_software.api_generator.TestResource;
 import com.experimental_software.api_generator.intermediate_representation.ClassModelFactory;
+import org.junit.jupiter.api.Test;
+import org.openehr.rm.common.change_control.VersionedObject;
+
+import static org.hamcrest.MatcherAssert.assertThat;
+import static org.hamcrest.Matchers.*;
 
 public class CodeGeneratorTest {
 

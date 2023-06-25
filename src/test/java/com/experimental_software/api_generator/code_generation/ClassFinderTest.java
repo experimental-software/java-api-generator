@@ -1,10 +1,10 @@
 package com.experimental_software.api_generator.code_generation;
 
+import org.junit.jupiter.api.Test;
+import org.openehr.rm.data_types.quantity.DvCount;
+
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
-
-import org.junit.jupiter.api.Test;
-import org.openehr.rm_data_types.quantity.DvCount;
 
 public class ClassFinderTest {
 
@@ -12,7 +12,7 @@ public class ClassFinderTest {
     public void testInferImportPath() {
         var result = new ClassFinder("DvCount").getImport().orElseThrow();
 
-        assertThat(result, is("org.openehr.rm_data_types.quantity.DvCount"));
+        assertThat(result, is("org.openehr.rm.data_types.quantity.DvCount"));
     }
 
     @Test

@@ -1,22 +1,16 @@
 package com.experimental_software.api_generator.code_generation;
 
-import static com.experimental_software.api_generator.code_generation.CodeGenerator.ClassNameUtils.getClassName;
+import com.experimental_software.api_generator.openehr_element.ClassModel;
+import com.experimental_software.api_generator.openehr_element.Function;
+import com.experimental_software.api_generator.util.StringUtils;
+import com.squareup.javapoet.*;
 
+import javax.lang.model.element.Modifier;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import javax.lang.model.element.Modifier;
-
-import com.experimental_software.api_generator.openehr_element.ClassModel;
-import com.experimental_software.api_generator.openehr_element.Function;
-import com.experimental_software.api_generator.util.StringUtils;
-import com.squareup.javapoet.ClassName;
-import com.squareup.javapoet.JavaFile;
-import com.squareup.javapoet.MethodSpec;
-import com.squareup.javapoet.ParameterSpec;
-import com.squareup.javapoet.TypeName;
-import com.squareup.javapoet.TypeSpec;
+import static com.experimental_software.api_generator.code_generation.CodeGenerator.ClassNameUtils.getClassName;
 
 public class CodeGenerator {
 
