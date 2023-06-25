@@ -17,7 +17,7 @@ repositories {
 }
 
 ext['openehrAmVersion'] = '2.2.0-alpha-2'
-ext['openehrBaseVersion'] = '1.2.0-alpha-1'
+ext['openehrBaseVersion'] = '1.2.0-alpha-2'
 ext['openehrRmVersion'] = '1.1.0-alpha-2'
 ext['openehrTermVersion'] = '2.4.0-alpha-3'
 

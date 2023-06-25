@@ -1,10 +1,10 @@
 package com.experimental_software.api_generator.code_generation;
 
 import static com.experimental_software.api_generator.code_generation.CodeGenerator.ClassNameUtils.getClassName;
-import static com.squareup.javapoet.ClassName.bestGuess;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 import javax.lang.model.element.Modifier;
 
@@ -71,7 +71,12 @@ public class CodeGenerator {
     private static void readSuperinterfaces(ClassModel classModel, List<ClassName> superinterfaces) {
         for (var t : classModel.getBaseTypes()) {
             try {
-                superinterfaces.add(getClassName(t.getName()));
+                var className = getClassName(t.getName());
+                if (className.simpleName().equals("String") || className.simpleName().equals("Object")) {
+                    // TODO: Clarify how to handle base types
+                    continue;
+                }
+                superinterfaces.add(className);
             } catch (Exception e) {
                 throw new RuntimeException(e);
             }
@@ -97,14 +102,29 @@ public class CodeGenerator {
 
     static class ClassNameUtils {
         static ClassName getClassName(String className) {
-            if (className.equals("T")) {
+            if (className.length() == 1) { // Generic type parameters like "T" and "V"
                 // TODO Add support for generic types
+                return ClassName.get(Object.class);
+            }
+            if (className.startsWith("List")) {
+                return ClassName.get(List.class);
+            }
+            if (className.startsWith("Hash")) {
+                return ClassName.get(Map.class);
+            }
+            if (className.equals("String")) {
+                return ClassName.get(String.class);
+            }
+            if (className.equals("Boolean")) {
+                return ClassName.get(Boolean.class);
+            }
+            if (className.equals("Any")) {
                 return ClassName.get(Object.class);
             }
 
             return new ClassFinder(className).getClassRepresentation()
                 .map(ClassName::get)
-                .orElse(bestGuess(className));
+                .orElse(ClassName.get(Object.class));
         }
         // TODO: If running in strict mode, raise exception if class representation could not be found.
     }
